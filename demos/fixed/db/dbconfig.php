@@ -1,9 +1,9 @@
 <?php
 /* Clase que crea una coneción a la base de datos
-* Modo de uso: 
+* Modo de uso:
 $db = DbConfig::getConnection();
 $sql = "SELECT id, nombre FROM region"
-$result = $db->query($sql); 
+$result = $db->query($sql);
 $res = array();
 while ($row = $result->fetch_assoc()) {
 	$res[] = $row;
@@ -12,7 +12,7 @@ $db->close();
 Resultados están en arreglo $res
 */
 class DbConfig{
-	private static $db_name = "hoc_db";//Base de datos de la app
+	private static $db_name = "hoc_dev";//Base de datos de la app
 	private static $db_user = "hoc_usr";//Usuario MySQL
 	private static $db_pass = "aiSahShooxo7ooXed7Ieyaicahkah7iewie3mai9";//Password
 	private static $db_host = "localhost";//Servidor donde esta alojado, puede ser 'localhost' o una IP (externa o interna).
@@ -26,7 +26,7 @@ class DbConfig{
 	}
 }
 
-function warning_handler($errno, $errstr) { 
+function warning_handler($errno, $errstr) {
 	die("couldn't connect to mysql.");
 }
 ?>
