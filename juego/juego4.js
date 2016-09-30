@@ -52,7 +52,7 @@ var assetsObj = {
 				"pjtest_o1": [8, 0],
 				"pjtest_o2": [16, 0],
 				"pjtest_o3": [24, 0],
-				
+
 				"mariohugo_o0": [0, 1],
 				"mariohugo_o1": [8, 1],
 				"mariohugo_o2": [16, 1],
@@ -179,7 +179,7 @@ function tile_simbolo(simbolo) {
 	return "missing_tile";
 }
 
-function crear_escenario() {	
+function crear_escenario() {
 	escenario = [];
 	indiceCacaEn = [];
 	metaEn = [];
@@ -199,7 +199,7 @@ function crear_escenario() {
 			stackeableEn[i][j] = false;
 		}
 	}
-	
+
 	spritePersonaje = HOC_LEVEL.personaje.tipo;
 	//indicePersonaje = indiceTipoPersonaje[HOC_LEVEL.personaje.tipo];
 	subimgsAnim = 8;
@@ -225,42 +225,42 @@ function crear_escenario() {
 			var igridMeta = HOC_LEVEL.metas.m[i].fila;
 			var jgridMeta = HOC_LEVEL.metas.m[i].columna;
 			var orientacionMeta = orientacionNumerica[HOC_LEVEL.metas.m[i].orientacion];
-			
+
 			meta[i] = Crafty.e("2D, Canvas, " + spriteMeta + "_o" + orientacionMeta)
 				.attr({igrid: igridMeta, jgrid: jgridMeta,
 					x: jgridMeta*s, y: igridMeta*s, w: s, h: s, tipo: spriteMeta})
 			;
-			
+
 			metaEn[igridMeta][jgridMeta] = meta[i];
 		}
 	}
-	
+
 	cargar_cacas();
-	
+
 	stackeable = [];
 	if (typeof HOC_LEVEL.stackeables !== 'undefined') {
 		for (var i = 0; i < HOC_LEVEL.stackeables.cantidad; ++i) {
-			var spriteStackeable = HOC_LEVEL.stackeables.s[i].tipo;	
+			var spriteStackeable = HOC_LEVEL.stackeables.s[i].tipo;
 			var igridStackeable = HOC_LEVEL.stackeables.s[i].fila;
 			var jgridStackeable = HOC_LEVEL.stackeables.s[i].columna;
-			
+
 			stackeable[i] = Crafty.e("2D, Canvas, " + spriteStackeable + ", SpriteAnimation")
 				.attr({igrid: igridStackeable, jgrid: jgridStackeable,
 					x: jgridStackeable*s, y: igridStackeable*s, w: s, h: s,
 					tipo: spriteStackeable})
 			;
-			
+
 			if (tilesFuegos.has(spriteStackeable))
 				stackeable[i]
 					.reel("flameo", duracionAnimFuego, 22, 0, 4)
 					.animate("flameo", -1)
 					.reelPosition(parseInt(spriteStackeable[spriteStackeable.length-1]))
 				;
-			
+
 			stackeableEn[igridStackeable][jgridStackeable] = stackeable[i];
 		}
 	}
-	
+
 	bloquesNecesarios = Infinity;
 	if (typeof HOC_LEVEL.maximoBloques !== 'undefined')
 		bloquesNecesarios = HOC_LEVEL.maximoBloques + 1;
@@ -268,6 +268,10 @@ function crear_escenario() {
 
 function bloques_usados() {
 	return Blockly.mainWorkspace.getAllBlocks().length;
+}
+
+function bloques_usados_codigo() {
+	return Blockly.mainWorkspace.getAllBlocks();
 }
 
 function simbolo_en(igrid, jgrid) {
@@ -302,9 +306,9 @@ function hay_al_menos_k_bloques_tipo(k, tipo) {
 		if (b[i].type == tipo){
 			++cuenta;
 		}
-			
+
 	}
-		
+
 	return (cuenta >= k);
 }
 
@@ -312,7 +316,7 @@ var cantidadBloqueRequeridoFaltante, tipoBloqueRequeridoFaltante;
 function condicion_de_bloques_requeridos() {
 	if (typeof HOC_LEVEL.bloquesRequeridos === 'undefined')
 		return true;
-	
+
 	var cantidad, tipo;
 	for (var i = 0; i < HOC_LEVEL.bloquesRequeridos.cantidad; ++i) {
 		cantidad = HOC_LEVEL.bloquesRequeridos.b[i].cantidad;
@@ -408,7 +412,7 @@ function go() {
 					break;
 				case "girando":
 					if (tAnim < 0.5) {
-						
+
 					} else if (tAnim < 1) {
 						this.animate("caminando_o" + this.orientacionDespues).pauseAnimation();
 					} else {
@@ -418,7 +422,7 @@ function go() {
 					break;
 				case "mirando":
 					if (tAnim < 0.5) {
-						
+
 					} else if (tAnim < 1) {
 						if (this.sentidoMirada != 0)
 							this.animate("mirando_" + (this.sentidoMirada > 0 ? "a" : "h") +
@@ -429,15 +433,15 @@ function go() {
 					break;
 				case "descansando":
 					this.animate("caminando_o" + this.orientacion).pauseAnimation();
-					
+
 					if (indiceCacaEn[this.igrid][this.jgrid] != -1) {
 						++cacasRecogidas;
 						caca[indiceCacaEn[this.igrid][this.jgrid]].visible = false;
 						indiceCacaEn[this.igrid][this.jgrid] = -1;
-						
+
 						Crafty.audio.play("beep");
 					}
-					
+
 					if (!condicion_de_victoria_inmediata())
 						this.estado = "pausaAnimacion";
 					else
@@ -474,8 +478,8 @@ function go() {
 						incompletedStage();
 						//else
 							//mostrar_mensaje_bloques_faltantes_derrota();
-							
-						
+
+
 						this.estado = "muerto";
 						Crafty.audio.play("mal");
 					}

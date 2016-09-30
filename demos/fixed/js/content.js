@@ -11,7 +11,7 @@ function initLevels(i){
   if(!clean){
     localStorage[completeStorage] = 0;
     localStorage[incompleteStorage] = 0;
-    
+
     for(var i = 1; i <= 20; i++){
       localStorage[linesStorage+i] = 0;
       localStorage[failStorage+i] = 0;
@@ -30,7 +30,7 @@ function isLevelCompleted(i){
     data = data>>1;
     i--;
   }
-  
+
   return (data&1)*2+(idata&1);
 }
 
@@ -89,7 +89,7 @@ function setLevelAsCompleted(i){
   localStorage[completeStorage] = mask | localStorage[completeStorage];
   localStorage[incompleteStorage] = ~mask & localStorage[incompleteStorage];
   localStorage[linesStorage+level] = bloques_usados()-1;
-  
+
   /*$.post( "ajax/updateCompletedLevels.php", { level_completed: localStorage[completeStorage]}).done(function( data ) {
   });
   $.post( "ajax/updateBlocks.php", { level_block: getLevelBlocks()}).done(function( data ) {
@@ -106,7 +106,7 @@ function setLevelAsIncompleted(i){
   localStorage[incompleteStorage] = mask | localStorage[incompleteStorage];
   localStorage[completeStorage] = ~mask & localStorage[completeStorage];
   localStorage[linesStorage+level] = bloques_usados()-1;
-  
+
   /*$.post( "ajax/updateCompletedLevels.php", { level_completed: localStorage[completeStorage]}).done(function( data ) {
   });
   $.post( "ajax/updateBlocks.php", { level_block: getLevelBlocks()}).done(function( data ) {
@@ -142,7 +142,7 @@ $('.levels li').each(function (i){
   applyColor($(this), i+1);
   $(this).click(function(){
     window.location.href = htmlLevelPrefix+'.php?level='+(i+1);
-  });	
+  });
 });
 
 
@@ -151,7 +151,7 @@ $(".welcome-image img").attr('src', 'media/welcome/'+HOC_LEVEL.imagen_inicial);
 
 if("tutorial" in HOC_LEVEL) {
   $('#video').removeClass('invisible');
-  
+
   $("#videoModal").on('hide.bs.modal', function(e) {
     $('#video-tutorial').remove();
   });
@@ -196,7 +196,7 @@ function attemptPost(res){
  	if(seconds>1){
  		$.post( "ajax/runAttempt.php", {
 		level: $('#i-level').val(),
-		blocks: bloques_usados()-1, 
+		num_blocks: bloques_usados()-1,
 		result: res
 		}).done(function( data ) { });
  	}
@@ -206,7 +206,7 @@ function attemptPost(res){
 
 function showHelp(){
   $('#helpModal').modal();
-  
+
   // $("#helpModal").modalContentDisplay(500);
   // $(".help-button").click(function(){
   // 		$('#hoc-fullmodal').hide();
@@ -221,16 +221,16 @@ function completedStage(){
   setLevelAsCompleted(lv);
 
   $('.completed-next-btn').removeClass('invisible');
-  
+
   $(".completed-repeat-btn").click(function(){
     resetear_nivel();
     $('#completedModal').modal('hide');
   });
-  
+
   $(".completed-next-btn").click(function(){
     window.location.href = linkReference();
   });
-  
+
   $('.completed-code-btn').click(function(){
     $('#completedModal').modal('hide');
     mostrar_javascript();
@@ -249,7 +249,7 @@ function semiCompletedStage(n){
     resetear_nivel();
     $('#completedModal').modal('hide');
   });
-  
+
   $(".completed-next-btn").click(function(){
     window.location.href = linkReference();
   });
@@ -284,14 +284,14 @@ function failedStage(block){
     resetear_nivel();
     $('#failedModal').hide();
   });
-  
+
   $(".completed-help-btn").click(function(){
     $('#failedModal').modal('hide');
     showHelp();
   });
-  
+
   $('.incompleted-block').html(block);
-  
+
   /*var lv = parseInt($('#i-level').val());
   localStorage[failStorage+lv] = 1+parseInt(localStorage[failStorage+lv]);
   $.post( "ajax/updateFail.php", { level_fail: getLevelFails()}).done(function( data ) { });*/
@@ -305,15 +305,15 @@ function wallCrash(){
     resetear_nivel();
     $('#murallaModal').modal('hide');
   });
-  
+
   $(".completed-help-btn").click(function(){
     $('#murallaModal').modal('hide');
     showHelp();
   });
-  
+
   execbtn.html('Reiniciar');
   execbtn.toggleClass("btn-danger btn-success");
-  
+
   /*var lv = parseInt($('#i-level').val());
   localStorage[crashStorage+lv] = 1+parseInt(localStorage[crashStorage+lv]);
   $.post( "ajax/updateCrash.php", { level_crash: getLevelCrashs()}).done(function( data ) { });*/
@@ -323,12 +323,12 @@ function wallCrash(){
 
 function forModal(){
   $("#emptyForErrorModal").modal();
-  
+
   $(".completed-repeat-btn").click(function(){
     resetear_nivel();
     $("#emptyForErrorModal").modal('hide');
   });
-  
+
   $(".completed-help-btn").click(function(){
     $("#emptyForErrorModal").modal('hide');
     showHelp();
@@ -352,5 +352,3 @@ function unconnectedBlocks(){
 }
 
 welcomeWindow();
-
-
