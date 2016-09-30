@@ -197,6 +197,7 @@ function attemptPost(res){
  		$.post( "ajax/runAttempt.php", {
 		level: $('#i-level').val(),
 		num_blocks: bloques_usados()-1,
+    code_blocks: bloques_usados_codigo(),
 		result: res
 		}).done(function( data ) { });
  	}

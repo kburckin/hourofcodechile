@@ -3,14 +3,15 @@ include_once __DIR__.'/../db/dbconfig.php';
 if(
 	!isset($_POST['result']) ||
 	!isset($_POST['num_blocks']) ||
-	!isset($_POST['level'])
+	!isset($_POST['level']) ||
+	!isset($_POST['code_blocks'])
 	){
-	exit("{status: 'fail 1'}");
+	exit("{status: 'fail'}");
 }
 session_start();
 
 if(!isset($_SESSION['USER'])){
-	exit("{status: 'fail 2'}");
+	exit("{status: 'fail'}");
 }
 $user = $_SESSION['USER'];
 $db = DbConfig::getConnection();
@@ -20,7 +21,7 @@ if(
 	!is_numeric($_POST['num_blocks']) ||
 	!is_numeric($_POST['level'])
 	){
-	exit("{status: 'fail 3'}");
+	exit("{status: 'fail'}");
 }
 
 $result = $_POST['result'];

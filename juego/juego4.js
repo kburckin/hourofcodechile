@@ -271,7 +271,9 @@ function bloques_usados() {
 }
 
 function bloques_usados_codigo() {
-	return Blockly.mainWorkspace.getAllBlocks();
+  var xml = Blockly.Xml.workspaceToDom(workspace);
+  var xml_text = Blockly.Xml.domToText(xml); // más fácil leer: Blockly.Xml.domToPrettyText(xml)
+  return xml_text;
 }
 
 function simbolo_en(igrid, jgrid) {
