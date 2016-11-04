@@ -27,9 +27,14 @@ if(
 $result = $_POST['result'];
 $num_blocks = $_POST['num_blocks'];
 $level = $_POST['level'];
-$sql = "INSERT INTO attempt_registry (user_id, used_blocks, level, result) VALUES ('$user', '$num_blocks', '$level', '$result');";
+$code_blocks = $_POST['code_blocks'];
+$sql1 = "INSERT INTO attempt_registry (user_id, used_blocks, level, result) VALUES ('$user', '$num_blocks', '$level', '$result');";
 
-$db->query($sql);
+if ($db->query($sql1) === TRUE) {
+    $attempt_id = $db->insert_id;
+		$sql2 = "INSERT INTO attempt_code (attempt_id, code_blocks) VALUES ('$attempt_id', '$code_blocks');";
+		$db->query($sql2);
+}
 $db->close();
 echo "{status: 'ok'}";
 session_write_close();
